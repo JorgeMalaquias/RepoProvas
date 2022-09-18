@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import {gettingUserByEmail} from "../repositories/userRepository"
+import {gettingUserByEmail} from "../repositories/usersRepository"
 
 export async function validatingToken(req: Request, res: Response,next:NextFunction) {
     const { authorization } = req.headers;
@@ -13,12 +13,7 @@ export async function validatingToken(req: Request, res: Response,next:NextFunct
     if(!data){
         throw ({ type: 'unauthorized', message: 'token was not informed or not valid' });
     }
-    if(typeof data==='string'){
-        const user = await gettingUserByEmail(data);
-        if(user===null){
-            throw ({ type: 'unauthorized', message: 'token was not informed or not valid' });
-        }
-    }
-    res.locals.userEmail = data;
+    
+    res.locals.userId = data;
     next();
 }

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "jest -i --no-cache",
+    "build":"tsc",
+    "test": "jest --no-cache",
     "dev": "nodemon ./src/index.ts"
   },
   "keywords": [],

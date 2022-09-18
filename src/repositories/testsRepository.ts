@@ -1,4 +1,4 @@
-import { prisma } from "../database/database";
+import prisma from "../database/database";
 
 
 export async function gettingUserByEmail(email:string){
@@ -17,15 +17,7 @@ export async function gettingUserById(id:number){
     });
     return user;
 }
-export async function gettingUserByIdAndEmail(id:number,email:string){
-    const user = await prisma.users.findFirst({
-        where:{
-            id,
-            email
-        }
-    });
-    return user;
-}
+
 
 export async function registering(email:string,password:string){
     await prisma.users.create({

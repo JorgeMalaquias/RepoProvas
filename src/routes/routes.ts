@@ -1,16 +1,10 @@
 import { Router } from "express";
-import cardRoutes from "./cardRoutes";
-import credentialRoutes from "./credentialRoutes";
-import noteRoutes from "./noteRoutes";
-import userRoutes from "./userRoutes";
-import wifiRoutes from "./wifiRoutes";
+import authRoutes from "./authRoutes";
+import testsRoutes from "./testsRoutes";
 
 const routes = Router();
 
-routes.use(userRoutes);
-routes.use(credentialRoutes);
-routes.use(noteRoutes);
-routes.use(cardRoutes);
-routes.use(wifiRoutes);
+routes.use(authRoutes);
+routes.use(testsRoutes);
 
 export default routes;

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import {gettingUserByEmail, gettingUserByIdAndEmail} from "../repositories/userRepository"
+import {gettingUserByEmail, gettingUserByIdAndEmail} from "../repositories/usersRepository"
 
 export async function validatingUser(req: Request, res: Response,next:NextFunction) {
     const email = res.locals.userEmail;
