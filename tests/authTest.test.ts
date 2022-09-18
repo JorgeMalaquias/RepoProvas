@@ -66,9 +66,53 @@ describe('Test POST /register',()=>{
 });
 
 
-describe('Testing the logging',()=>{
-  it.todo('Should return status 200 and the new token generated when everything go well');
-  it.todo('Should return status 422 when the body of the request is invalid');
-  it.todo('Should return status 404 when the requested user does not exist');
-  it.todo('Should return status 401 when the informed password is wrong');
+describe('Test POST /login',()=>{
+  it('Should return status 200 and the new token generated when everything go well',async()=>{
+    const bodyRegister = {
+      email: 'jojo@email.com',
+      password: 'xablau',
+      confirmPassword: 'xablau'
+    }
+    const body = {
+      email: 'jojo@email.com',
+      password: 'xablau'
+    }
+    await supertest(app).post(`/register`).send(bodyRegister);
+    const result =  await supertest(app).post(`/login`).send(body);
+    expect(result.status).toBe(200);
+    console.log(result.body);
+    expect(result.body).toBeInstanceOf(Object);
+  });
+  it('Should return status 422 when the body of the request is invalid',async()=>{
+    const body = {
+      email: 'jojo@email.com'
+    }
+    const result =  await supertest(app).post(`/login`).send(body);
+    expect(result.status).toBe(422);
+  });
+  it('Should return status 404 when the requested user does not exist',async()=>{
+    const body = {
+      email: 'jojo@email.com',
+      password: 'xablau'
+    }
+    const result =  await supertest(app).post(`/login`).send(body);
+    expect(result.status).toBe(404);
+  });
+  it('Should return status 401 when the informed password is wrong',async()=>{
+    const bodyRegister = {
+      email: 'jojo@email.com',
+      password: 'xablau',
+      confirmPassword: 'xablau'
+    }
+    const body = {
+      email: 'jojo@email.com',
+      password: 'xabla'
+    }
+    await supertest(app).post(`/register`).send(bodyRegister);
+    const result =  await supertest(app).post(`/login`).send(body);
+    expect(result.status).toBe(401);
+  });
 });
+
+
+// tests about tests
