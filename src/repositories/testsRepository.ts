@@ -19,11 +19,14 @@ export async function gettingUserById(id:number){
 }
 
 
-export async function registering(email:string,password:string){
-    await prisma.users.create({
+export async function inserting(name:string,pdfUrl:string,categoryId:number,teacherDisciplineId:number){
+    const newTest = await prisma.tests.create({
         data: {
-            email,
-            password
+            name,
+            pdfUrl,
+            categoryId,
+            teacherDisciplineId
         }
     });
+    return newTest;
 }
