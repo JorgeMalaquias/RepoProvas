@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build":"tsc",
+    "build":"tsc && npx prisma migrate deploy --name init",
     "test": "jest --no-cache",
     "dev": "nodemon ./src/server.ts"
   },
