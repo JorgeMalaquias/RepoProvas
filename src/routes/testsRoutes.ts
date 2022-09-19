@@ -8,6 +8,6 @@ const testsRoutes = Router();
 
 testsRoutes.post('/tests', validatingToken,validateSchemaMiddleware(testSchema),postingNewTest);
 testsRoutes.get('/tests/byDiscipline', validatingToken, gettingAllTestsByDiscipline);
-testsRoutes.get('/tests/byTeacher', validatingToken);
+testsRoutes.get('/tests/byTeacher', validatingToken,gettingAllTestsByTeacher);
 
 export default testsRoutes;

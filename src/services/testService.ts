@@ -58,3 +58,7 @@ export async function gettingAllTestsByDiscipline(){
     const tests = await termsServices.gettingTestsGroupByDisciplines();
     return (tests);
 }
+export async function gettingAllTestsByTeacher(){
+    const tests = await teachersServices.gettingTestsGroupByTeachers();
+    return (tests);
+}

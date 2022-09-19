@@ -12,6 +12,6 @@ export async function gettingAllTestsByDiscipline(req:Request,res:Response){
     res.status(200).send(tests);
 }
 export async function gettingAllTestsByTeacher(req:Request,res:Response){
-    const newTest = await testServices.postingNewTest(req.body);
-    res.status(201).send(newTest);
+    const tests = await testServices.gettingAllTestsByTeacher();
+    res.status(200).send(tests);
 }
