@@ -53,3 +53,8 @@ async function gettingTeacherId(teacherName: string) {
     }
     return teacher.id;
 }
+
+export async function gettingAllTestsByDiscipline(){
+    const tests = await termsServices.gettingTestsGroupByDisciplines();
+    return (tests);
+}

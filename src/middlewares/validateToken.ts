@@ -7,6 +7,9 @@ export async function validatingToken(req: Request, res: Response,next:NextFunct
     if (!authorization) {
         throw ({ type: 'unauthorized', message: 'token was not informed or not valid' });
     }
+    if(authorization.includes("Bearer ")===false){
+        throw ({ type: 'unauthorized', message: 'token was not informed or not valid' });
+    }
     const token = authorization?.replace("Bearer ", "");
     const jwtKey:string|any = process.env.JWT_SECRET;
     const data = jwt.verify(token, jwtKey);

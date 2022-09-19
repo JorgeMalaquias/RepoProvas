@@ -139,11 +139,35 @@ describe('Test POST /tests', () => {
       discipline: 'HTML e CSS',
       teacher: 'Bruna Hamori'
     }
-    const result = await supertest(app).post(`/tests`).send(body).set({authorization: resultLogin.body.token});
+    const result = await supertest(app).post(`/tests`).send(body).set({authorization: 'Bearer ' + resultLogin.body.token});
     
     expect(result.status).toBe(201);
     
     expect(result.body).toMatchObject({name:body.name,pdfUrl:body.pdfUrl});
+  });
+  it('Should return status 401 when the token is not informed or invalid', async () => {
+    const bodyRegister = {
+      email: 'jojo@email.com',
+      password: 'xablau',
+      confirmPassword: 'xablau'
+    }
+    const bodyLogin = {
+      email: 'jojo@email.com',
+      password: 'xablau'
+    }
+    await supertest(app).post(`/register`).send(bodyRegister);
+    const resultLogin = await supertest(app).post(`/login`).send(bodyLogin);
+
+    const body = {
+      name: 'projetao',
+      pdfUrl: 'https://www.africau.edu/images/default/sample.pdf',
+      category: 'Projeto',
+      discipline: 'HTML e CSS',
+      teacher: 'Bruna Hamori'
+    }
+    const result = await supertest(app).post(`/tests`).send(body).set({authorization: 'xablau'});
+    
+    expect(result.status).toBe(401);
   });
   it('Should return status 422 when the body of the request is invalid', async () => {
     const bodyRegister = {
@@ -165,7 +189,7 @@ describe('Test POST /tests', () => {
       discipline: 'HTML e CSS',
       teacher: 'Bruna Hamori'
     }
-    const result = await supertest(app).post(`/tests`).send(body).set({authorization: resultLogin.body.token});
+    const result = await supertest(app).post(`/tests`).send(body).set({authorization: 'Bearer ' + resultLogin.body.token});
     
     expect(result.status).toBe(422);
   });
@@ -189,7 +213,7 @@ describe('Test POST /tests', () => {
       discipline: 'HTML e CSS',
       teacher: 'Bruna Hamori'
     }
-    const result = await supertest(app).post(`/tests`).send(body).set({authorization: resultLogin.body.token});
+    const result = await supertest(app).post(`/tests`).send(body).set({authorization: 'Bearer ' + resultLogin.body.token});
     
     expect(result.status).toBe(404);
   });
@@ -213,7 +237,7 @@ describe('Test POST /tests', () => {
       discipline: 'HTML e CSS',
       teacher: 'Jubiscleiton'
     }
-    const result = await supertest(app).post(`/tests`).send(body).set({authorization: resultLogin.body.token});
+    const result = await supertest(app).post(`/tests`).send(body).set({authorization: 'Bearer ' + resultLogin.body.token});
     
     expect(result.status).toBe(404);
   });
@@ -237,8 +261,80 @@ describe('Test POST /tests', () => {
       discipline: 'Boot Bar',
       teacher: 'Bruna Hamori'
     }
-    const result = await supertest(app).post(`/tests`).send(body).set({authorization: resultLogin.body.token});
+    const result = await supertest(app).post(`/tests`).send(body).set({authorization: 'Bearer ' + resultLogin.body.token});
     
     expect(result.status).toBe(404);
   });
 });
+
+describe('Test GET /tests/byDiscipline', () => {
+  it('Should return status 200 and an array', async () => {
+    const bodyRegister = {
+      email: 'jojo@email.com',
+      password: 'xablau',
+      confirmPassword: 'xablau'
+    }
+    const bodyLogin = {
+      email: 'jojo@email.com',
+      password: 'xablau'
+    }
+    await supertest(app).post(`/register`).send(bodyRegister);
+    const resultLogin = await supertest(app).post(`/login`).send(bodyLogin);
+
+    const body1 = {
+      name: 'projetao',
+      pdfUrl: 'https://www.africau.edu/images/default/sample.pdf',
+      category: 'Prática',
+      discipline: 'HTML e CSS',
+      teacher: 'Bruna Hamori'
+    }
+    await supertest(app).post(`/tests`).send(body1).set({authorization: 'Bearer ' + resultLogin.body.token});
+    const body2 = {
+      name: 'projetinho',
+      pdfUrl: 'https://www.africau.edu/images/default/sample.pdf',
+      category: 'Projeto',
+      discipline: 'HTML e CSS',
+      teacher: 'Bruna Hamori'
+    }
+    await supertest(app).post(`/tests`).send(body2).set({authorization: 'Bearer ' + resultLogin.body.token});
+    const body3 = {
+      name: 'projetasso',
+      pdfUrl: 'https://www.africau.edu/images/default/sample.pdf',
+      category: 'Projeto',
+      discipline: 'HTML e CSS',
+      teacher: 'Bruna Hamori'
+    }
+    await supertest(app).post(`/tests`).send(body3).set({authorization: 'Bearer ' + resultLogin.body.token});
+
+    const result = await supertest(app).get(`/tests/byDiscipline`).set({authorization: 'Bearer ' + resultLogin.body.token});
+    
+    expect(result.status).toBe(200);
+    expect(result.body).toBeInstanceOf(Array);
+  });
+  /*it('Should return status 401 when the token is not informed or invalid', async () => {
+    const bodyRegister = {
+      email: 'jojo@email.com',
+      password: 'xablau',
+      confirmPassword: 'xablau'
+    }
+    const bodyLogin = {
+      email: 'jojo@email.com',
+      password: 'xablau'
+    }
+    await supertest(app).post(`/register`).send(bodyRegister);
+    const resultLogin = await supertest(app).post(`/login`).send(bodyLogin);
+
+    const body = {
+      name: 'projetao',
+      pdfUrl: 'https://www.africau.edu/images/default/sample.pdf',
+      category: 'Projeto',
+      discipline: 'HTML e CSS',
+      teacher: 'Bruna Hamori'
+    }
+    const result = await supertest(app).post(`/tests`).send(body).set({authorization: 'xablau'});
+    
+    expect(result.status).toBe(401);
+  });*/
+});
+
+// Bearer 

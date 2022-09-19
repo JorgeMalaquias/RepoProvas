@@ -6,7 +6,7 @@
   "scripts": {
     "build":"tsc",
     "test": "jest --no-cache",
-    "dev": "nodemon ./src/index.ts"
+    "dev": "nodemon ./src/server.ts"
   },
   "keywords": [],
   "author": "",
