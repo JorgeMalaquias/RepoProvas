@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "build":"tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/server.js",
     "test": "jest --no-cache",
     "dev": "nodemon ./src/server.ts"
   },
